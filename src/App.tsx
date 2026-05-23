@@ -42,7 +42,6 @@ function App() {
 
   // Image Tab States
   const [image, setImage] = useState<string | null>(null);
-  const [croppedImage, setCroppedImage] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [processStatus, setProcessStatus] = useState('');
   const [ocrText, setOcrText] = useState('');
@@ -71,7 +70,7 @@ function App() {
             const reader = new FileReader();
             reader.onload = (event) => {
               setImage(event.target?.result as string);
-              setOcrText(''); setTranslatedText(''); setAiAnalysis(''); setCroppedImage(null);
+              setOcrText(''); setTranslatedText(''); setAiAnalysis('');
             };
             reader.readAsDataURL(blob);
           }
@@ -89,7 +88,7 @@ function App() {
       const reader = new FileReader();
       reader.onload = (event) => {
         setImage(event.target?.result as string);
-        setOcrText(''); setTranslatedText(''); setAiAnalysis(''); setCroppedImage(null);
+        setOcrText(''); setTranslatedText(''); setAiAnalysis('');
       };
       reader.readAsDataURL(file);
     }
@@ -171,7 +170,6 @@ Từ điển: 방=lượt buff, 헤이=Haste, 가능=Có thể, 판도라=Pandor
     let imageToProcess = image;
     if (completedCrop && completedCrop.width > 0 && completedCrop.height > 0) {
       imageToProcess = await getCroppedImg(image, completedCrop);
-      setCroppedImage(imageToProcess);
     }
     await callGeminiVision(imageToProcess);
   };
